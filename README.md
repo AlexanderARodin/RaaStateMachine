@@ -1,3 +1,3 @@
 # RaaStateMachine
 
-A description of this package.
+Simple state machine.
