@@ -12,7 +12,7 @@
 
 public class RaaStateMachine<State: RaaState> {
 	
-	private(set) var state: State {
+	public private(set) var state: State {
 		willSet {
 			state.willExit(to: newValue)
 		}
