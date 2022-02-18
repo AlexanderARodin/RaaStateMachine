@@ -1,4 +1,3 @@
 # RaaStateMachine
 
 Simple state machine.
-
