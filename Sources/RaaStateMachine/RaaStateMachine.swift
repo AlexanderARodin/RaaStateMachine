@@ -12,14 +12,7 @@
 
 public class RaaStateMachine<State: RaaState> {
 	
-	public private(set) var state: State /*{
-		willSet {
-			state.willExit(to: newValue)
-		}
-		didSet {
-			state.didEnter(from: oldValue)
-		}
-	}*/
+	public private(set) var state: State
 	
 	
 	public init( with state: State) {

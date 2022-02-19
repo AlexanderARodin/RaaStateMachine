@@ -14,11 +14,5 @@ public protocol RaaState {
 	associatedtype StateType
 	
 	func isValidNextState<StateType>(_ nextState: StateType ) -> Bool
-//	func willExit<StateType>( to nextState: StateType )
-//	func didEnter<StateType>( from prevState: StateType )
 }
 
-//public extension RaaState {
-//	func willExit( to nextState: StateType) {}
-//	func didEnter( from prevState: StateType) {}
-//}

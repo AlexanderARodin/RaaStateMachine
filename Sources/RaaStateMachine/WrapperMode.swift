@@ -11,15 +11,15 @@
 
 
 @propertyWrapper
-struct StateMachine<State: RaaState> {
+public struct StateMachine<State: RaaState> {
 	private var machine:RaaStateMachine<State>
-	var wrappedValue:State {
+	public var wrappedValue:State {
 		get {machine.state}
 		set {machine.enter(newValue)}
 	}
-	var projectedValue:RaaStateMachine<State> {machine}
+	public var projectedValue:RaaStateMachine<State> {machine}
 	
-	init( wrappedValue: State) {
+	public init( wrappedValue: State) {
 		self.machine = RaaStateMachine(with: wrappedValue)
 	}
 }
