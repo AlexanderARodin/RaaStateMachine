@@ -12,14 +12,14 @@
 
 public class RaaStateMachine<State: RaaState> {
 	
-	public private(set) var state: State {
+	public private(set) var state: State /*{
 		willSet {
 			state.willExit(to: newValue)
 		}
 		didSet {
 			state.didEnter(from: oldValue)
 		}
-	}
+	}*/
 	
 	
 	public init( with state: State) {
@@ -31,7 +31,7 @@ public class RaaStateMachine<State: RaaState> {
 
 public extension RaaStateMachine {
 	func isValidNextState(_ nextState: State ) -> Bool {
-		State.isTransitionAllowed(from: state, to: nextState)
+		state.isValidNextState(nextState)
 	}
 	func enter( _ nextState: State ){
 		if isValidNextState(nextState) {

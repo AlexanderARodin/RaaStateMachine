@@ -6,7 +6,8 @@ import XCTest
 
 
 final class RaaStateMachineTests: XCTestCase {
-	
+	@StateMachine var state:StateA = .one
+
 	func testSimpleTransitions() throws {
 		let stateMachine = RaaStateMachine(with: StateA.one)
 		XCTAssert(stateMachine.state == .one)
@@ -30,7 +31,30 @@ final class RaaStateMachineTests: XCTestCase {
 		XCTAssert(stateMachine.state == .two)
 	}
 	
-	
+	func testWrappedValue() throws {
+		XCTAssert(state == .one)
+		XCTAssert($state.isValidNextState(.one))
+		XCTAssert($state.isValidNextState(.two))
+		XCTAssert($state.isValidNextState(.three(i: 3)))
+		XCTAssert($state.isValidNextState(.three(i: 4)))
+		XCTAssert($state.attemptToEnter( .three(i: 5)) )
+		XCTAssert(state == .three(i: 5))
+		XCTAssert(state != .one)
+		XCTAssert(state != .two)
+		XCTAssert(state != .three(i: 2))
+		
+		XCTAssert($state.isValidNextState(.one))
+		XCTAssert($state.isValidNextState(.two))
+		XCTAssert($state.isValidNextState(.three(i: 3)))
+		XCTAssert(!$state.isValidNextState(.three(i: 10)))
+		XCTAssert(!$state.attemptToEnter( .three(i: 15)) )
+		XCTAssert(state == .three(i: 5))
+		XCTAssert($state.attemptToEnter( .two) )
+		XCTAssert(state == .two)
+		state = .three(i: 3)
+		XCTAssert(state != .three(i: 5))
+		XCTAssert(state == .three(i: 3))
+	}
 }
 
 
@@ -49,6 +73,9 @@ extension RaaStateMachineTests {
 
 
 enum StateA: RaaState {
+	typealias StateType = StateA
+	
+	
 	static func !=(left: StateA, right: StateA) -> Bool {
 		!(left == right)
 	}
@@ -62,7 +89,8 @@ enum StateA: RaaState {
 			return false
 		}
 	}
-	static func isTransitionAllowed(from prevState: RaaState, to nextState: RaaState) -> Bool {
+	func isValidNextState<StateType>(_ nextState: StateType) -> Bool {
+//	func isValidNextState(_ nextState: RaaState) -> Bool {
 		guard let nextState = nextState as? StateA else {return false}
 		switch nextState {
 		case .three(let i):
