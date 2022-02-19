@@ -1,5 +1,5 @@
 //
-//  RaaState.swift
+//  StateProtocol.swift
 //  
 //
 //  Created by the Dragon on 18.02.2022.
@@ -10,7 +10,7 @@
 
 
 
-public protocol RaaState {
+public protocol StateProtocol {
 	associatedtype StateType
 	
 	func isValidNextState<StateType>(_ nextState: StateType ) -> Bool

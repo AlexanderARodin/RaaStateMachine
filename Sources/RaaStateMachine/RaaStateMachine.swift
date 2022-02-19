@@ -10,12 +10,12 @@
 //	//	//	//	//	//	//	//
 
 
-public class RaaStateMachine<State: RaaState> {
+public class RaaStateMachine<State: StateProtocol> {
 	
-	public private(set) var state: State
+	private(set) var state: State
 	
 	
-	public init( with state: State) {
+	init( with state: State) {
 		self.state = state
 	}
 }

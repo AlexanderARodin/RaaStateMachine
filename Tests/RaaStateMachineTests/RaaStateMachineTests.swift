@@ -7,7 +7,7 @@ import XCTest
 
 final class RaaStateMachineTests: XCTestCase {
 	@StateMachine var state:StateA = .one
-
+	
 	func testSimpleTransitions() throws {
 		let stateMachine = RaaStateMachine(with: StateA.one)
 		XCTAssert(stateMachine.state == .one)
@@ -72,7 +72,7 @@ extension RaaStateMachineTests {
 }
 
 
-enum StateA: RaaState {
+enum StateA: StateProtocol {
 	typealias StateType = StateA
 	
 	
@@ -81,22 +81,22 @@ enum StateA: RaaState {
 	}
 	static func ==(left: StateA, right: StateA) -> Bool {
 		switch (left, right) {
-		case (one, one), (two, two):
-			return true
-		case ( three(let i1), three(let i2) ):
-			return i1 == i2
-		default:
-			return false
+			case (one, one), (two, two):
+				return true
+			case ( three(let i1), three(let i2) ):
+				return i1 == i2
+			default:
+				return false
 		}
 	}
 	func isValidNextState<StateType>(_ nextState: StateType) -> Bool {
-//	func isValidNextState(_ nextState: RaaState) -> Bool {
+		//	func isValidNextState(_ nextState: RaaState) -> Bool {
 		guard let nextState = nextState as? StateA else {return false}
 		switch nextState {
-		case .three(let i):
-			return i < 10
-		default:
-			return true
+			case .three(let i):
+				return i < 10
+			default:
+				return true
 		}
 	}
 	

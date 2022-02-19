@@ -11,7 +11,7 @@
 
 
 @propertyWrapper
-public struct StateMachine<State: RaaState> {
+public struct StateMachine<State: StateProtocol> {
 	private var machine:RaaStateMachine<State>
 	public var wrappedValue:State {
 		get {machine.state}
