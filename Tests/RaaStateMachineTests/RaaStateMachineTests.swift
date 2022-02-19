@@ -8,13 +8,13 @@ import XCTest
 final class RaaStateMachineTests: XCTestCase {
 	
 	func testSimpleTransitions() throws {
-		let stateMachine = RaaStateMachine(StateA.one)
+		let stateMachine = RaaStateMachine(with: StateA.one)
 		XCTAssert(stateMachine.state == .one)
 		XCTAssert(stateMachine.isValidNextState(.one))
 		XCTAssert(stateMachine.isValidNextState(.two))
 		XCTAssert(stateMachine.isValidNextState(.three(i: 3)))
 		XCTAssert(stateMachine.isValidNextState(.three(i: 4)))
-		XCTAssert(stateMachine.enter(state: .three(i: 5)) )
+		XCTAssert(stateMachine.attemptToEnter( .three(i: 5)) )
 		XCTAssert(stateMachine.state == .three(i: 5))
 		XCTAssert(stateMachine.state != .one)
 		XCTAssert(stateMachine.state != .two)
@@ -24,9 +24,9 @@ final class RaaStateMachineTests: XCTestCase {
 		XCTAssert(stateMachine.isValidNextState(.two))
 		XCTAssert(stateMachine.isValidNextState(.three(i: 3)))
 		XCTAssert(!stateMachine.isValidNextState(.three(i: 10)))
-		XCTAssert(!stateMachine.enter(state: .three(i: 15)) )
+		XCTAssert(!stateMachine.attemptToEnter( .three(i: 15)) )
 		XCTAssert(stateMachine.state == .three(i: 5))
-		XCTAssert(stateMachine.enter(state: .two) )
+		XCTAssert(stateMachine.attemptToEnter( .two) )
 		XCTAssert(stateMachine.state == .two)
 	}
 	

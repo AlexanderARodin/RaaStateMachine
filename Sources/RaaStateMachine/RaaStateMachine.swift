@@ -22,7 +22,7 @@ public class RaaStateMachine<State: RaaState> {
 	}
 	
 	
-	public init(_ state: State) {
+	public init( with state: State) {
 		self.state = state
 	}
 }
@@ -33,7 +33,12 @@ public extension RaaStateMachine {
 	func isValidNextState(_ nextState: State ) -> Bool {
 		State.isTransitionAllowed(from: state, to: nextState)
 	}
-	func enter( state nextState: State ) -> Bool{
+	func enter( _ nextState: State ){
+		if isValidNextState(nextState) {
+			state = nextState
+		}
+	}
+	func attemptToEnter( _ nextState: State ) -> Bool{
 		if isValidNextState(nextState) {
 			state = nextState
 			return true
